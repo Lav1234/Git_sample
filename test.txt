@@ -4,3 +4,79 @@ first commit
 1 
 2 
 3
+********************************************************************
+Feature: MCOM :: Facebook page
+
+
+  Scenario: Validate user login
+
+    Given I visit the web site
+   When I enter username as "abc"
+   And I enter password as "xyz"
+   Then Login should fail
+    But Relogin option should be available
+********************************************************************
+import cucumber.api.PendingException;
+import cucumber.api.java.en.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Annotations {
+    WebDriver driver;
+    public Annotations() {
+        driver = null;
+    }
+
+    @Given("^I visit the web site$")
+    public void iVisitTheWebSite() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver = new FirefoxDriver();
+        driver.navigate().to("https://www.facebook.com/");
+        throw new PendingException();
+    }
+
+    @When("^I enter username as \"([^\"]*)\"$")
+    public void iEnterUsernameAs(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.findElement(By.id("email")).sendKeys(arg1);
+            throw new PendingException();
+    }
+
+    @And("^I enter password as \"([^\"]*)\"$")
+    public void iEnterPasswordAs(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+                driver.findElement(By.id("pass")).sendKeys(arg1);
+                driver.findElement(By.id("u_0_v")).click();
+
+                throw new PendingException();
+    }
+
+    @Then("^Login should fail$")
+    public void loginShouldFail() throws Throwable {
+        if(driver.getCurrentUrl().equalsIgnoreCase(
+                "https://www.facebook.com/login.php?login_attempt=1&lwv=110")){
+            System.out.println("Test1 Pass");
+        } else {
+            System.out.println("Test1 Failed");
+        }
+        driver.close();
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @But("^Relogin option should be available$")
+    public void reloginOptionShouldBeAvailable() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        if(driver.getCurrentUrl().equalsIgnoreCase(
+                "https://www.facebook.com/login.php?login_attempt=1&lwv=110")){
+            System.out.println("Test2 Pass");
+        } else {
+            System.out.println("Test2 Failed");
+        }
+        driver.close();
+        throw new PendingException();
+    }
+}
+
+
